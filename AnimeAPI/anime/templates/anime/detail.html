@@ -8,6 +8,26 @@
    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />-->
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>Movie App</title>
+    <style>
+        .movie h3 {
+            color: #fff;
+            margin-left: 10px;
+        }
+        .movie a {
+            text-decoration: none;
+            color: coral;
+            letter-spacing: 1px;
+        }
+        .movie p {
+            margin-left: 10px;
+            color: azure;
+        }
+        #main div {
+            margin-left: 20rem;
+            width: 400px;
+            height: auto;
+        } 
+    </style>
 </head>
 <body>
 <header>
@@ -17,14 +37,14 @@
 </header> 
 <main id="main">
     
-    <div>
+    <div >
         <div class="movie">
             <h3 style="color: aliceblue; margin-left: 10px;">{{data.title}}</h3>
             <img  src="{{epi.cover}}" alt="{{data.title}}">
             
             <p>{{data.description}}</p>
-            <h3 style="color: aliceblue; margin-left: 10px;"><a href="{{data.stream}}">{{data.stream}}</a></h3>
-            <h3 style="color: aliceblue; margin-left: 10px;"><a href="{{data.download}}">{{data.download}}</a></h3>
+            <h3 ><a href="{{data.stream}}">To stream the movie</a></h3>
+            <h3 ><a href="{{data.download}}">To download movie</a></h3>
         </div>
     </div>
   
