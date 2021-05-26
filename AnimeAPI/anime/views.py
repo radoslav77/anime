@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 import requests
 
 # Create your views here.
@@ -8,42 +8,6 @@ import requests
 #    'x-rapidapi-key': "e5cca01e94msh13b50c3f5cb7543p139c26jsn9bd955386cb9",
 #    'x-rapidapi-host': "hummingbirdv1.p.rapidapi.com"
 # }
-
-
-def index(request):
-
-    return render(request, 'anime/index.html')
-
-
-def home(request):
-    '''
-    response = requests.get('http://freegeoip.net/json/')
-    geodata = response.json()
-    '''
-    url = "https://simpleanime.p.rapidapi.com/anime/get/download/MTQ4Nzcz"
-
-    headers = {
-        'x-rapidapi-key': "e5cca01e94msh13b50c3f5cb7543p139c26jsn9bd955386cb9",
-        'x-rapidapi-host': "simpleanime.p.rapidapi.com"
-    }
-
-    response = requests.request("GET", url, headers=headers)
-
-    print(response.text)
-    geodata = response.json()
-
-    titles = []
-    t = []
-    for r in geodata['data']:
-        titles.append(r)
-        for title in titles:
-            t.append(title)
-            print(title)
-    # print(geodata)
-    return render(request, 'anime/home.html', {
-        'ip': t,
-        # 'country': geodata
-    })
 
 
 def latest(request):
@@ -64,7 +28,7 @@ def latest(request):
         titles.append(r)
         for title in titles:
             t.append(title)
-            print(title)
+            # print(title)
     return render(request, 'anime/latest.html', {
         'datas': t
     })
@@ -97,3 +61,32 @@ def details(request, vid_id):
         'data': title,
         'epi': covers[0]
     })
+
+
+def search(request):
+    # if request.method == "POST":
+    q = request.POST['search']
+    url = "https://simpleanime.p.rapidapi.com/anime/search/" + q
+
+    headers = {
+        'x-rapidapi-key': "e5cca01e94msh13b50c3f5cb7543p139c26jsn9bd955386cb9",
+        'x-rapidapi-host': "simpleanime.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers)
+
+    data = response.json()
+    titles = []
+    t = []
+    covers = []
+    for r in data['data']:
+        titles.append(r)
+        for title in titles:
+            t.append(title)
+    # for cover in data['episode']:
+    #    covers.append(cover)
+    return render(request, 'anime/latest.html', {
+        'datas': t
+    })
+
+    # return redirect('latest')
